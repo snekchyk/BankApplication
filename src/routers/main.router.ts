@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {authRouter} from "./auth.router";
 import {adminRouter} from "./admin.router";
 import {userRouter} from "./user.router";
+import {transactionRouter} from "./transaction.router";
 
 const router = Router()
 
