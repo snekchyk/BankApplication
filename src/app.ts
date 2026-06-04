@@ -3,5 +3,8 @@ import { router } from './routers/main.router.js'
 
 const app = express()
 
+app.use(express.json())
+app.use('/', router)
+
 
 export { app }

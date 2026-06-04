@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import {authRouter} from "./auth.router";
-import {adminRouter} from "./admin.router";
-import {userRouter} from "./user.router";
-import {transactionRouter} from "./transaction.router";
+import {authRouter} from "./auth.router.js";
+import {adminRouter} from "./admin.router.js";
+import {userRouter} from "./user.router.js";
+import {transactionRouter} from "./transaction.router.js";
 
 const router = Router()
 
