@@ -35,6 +35,26 @@ class UserQueryRepository {
             }
         })
     }
+
+    async findUserByUsername(username: string): Promise<UserViewModel | null> {
+        return prisma.users.findUnique({
+            where: { username },
+            select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+                age: true
+            }
+        })
+    }
+
+    async findFullUserByUsername(username: string): Promise<Users | null> {
+        return prisma.users.findUnique({
+            where: {
+                username: username
+            }
+        })
+    }
 }
 
 export default new UserQueryRepository()

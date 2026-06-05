@@ -3,6 +3,8 @@ import {RegistrationInputModel, RegisterSchema} from "../models/input/Registrati
 import UserQueryRepository from "../repositories/user.query.repository.js";
 import UserController from "../controllers/user.controller.js";
 import UserRepository from "../repositories/user.repository.js";
+import {LoginInputModel, LoginSchema} from "../models/input/LoginInputModel.js";
+import JwtService from "../infrastructure/jwt.service.js";
 
 class AuthService {
     async register(data: RegistrationInputModel) {
@@ -39,6 +41,37 @@ class AuthService {
         }
 
         return user
+
+    }
+
+    async login(data: LoginInputModel) {
+        const validatedData = LoginSchema.parse(data)
+
+        console.log(validatedData)
+
+        const user = await UserQueryRepository.findFullUserByUsername(validatedData.username)
+
+        if (!user) {
+            throw new Error('Invalid username or password2')
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(data.password, user.password)
+
+        if (!isPasswordCorrect) {
+            throw new Error('Invalid username or password1')
+        }
+
+        const token = await JwtService.generate(user)
+
+        const payload = await UserQueryRepository.findUserByUsername(validatedData.username)
+        if (!payload) {
+            throw new Error('Invalid username or password')
+        }
+
+        return {
+            accessToken: token,
+            user: payload
+        }
 
     }
 }

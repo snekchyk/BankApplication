@@ -36,8 +36,32 @@ class AuthController {
         }
     }
 
-    login(req: RequestWithBody<LoginInputModel>, res: Response<UserViewAccessStringModel>) {
-        res.sendStatus(200)
+    async login(req: RequestWithBody<LoginInputModel>, res: Response<UserViewAccessStringModel | any>) {
+        try {
+            const user = await AuthService.login(req.body)
+
+            return res.status(200).json(user)
+        } catch(err: any) {
+            console.error("Login error:", err)
+
+            if (err instanceof ZodError) {
+                const formattedErrors = err.issues.map(e => ({
+                    field: e.path.join('.'),
+                    message: e.message
+                }));
+
+                return res.status(400).json({
+                    status: "error",
+                    errors: formattedErrors
+                });
+            }
+
+            if (err instanceof Error) {
+                return res.status(400).json({ message: err.message });
+            }
+
+            return res.status(500).json({ message: "Internal server error" });
+        }
     }
 }
 
