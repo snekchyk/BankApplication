@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import UserService from "../services/user.service.js";
 
 class UserController {
-    async meInfo(req: Request, res: Response) {
+    async information(req: Request, res: Response) {
         const info = await UserService.meInfo(req.user.email)
 
         if (!info) {
