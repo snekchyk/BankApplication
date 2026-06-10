@@ -55,6 +55,14 @@ class UserQueryRepository {
             }
         })
     }
+
+    async findUserById(id: string): Promise<UserViewModel | null> {
+        return prisma.users.findUnique({
+            where: {
+                id: id
+            }
+        })
+    }
 }
 
 export default new UserQueryRepository()

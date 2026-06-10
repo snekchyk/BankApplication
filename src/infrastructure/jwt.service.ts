@@ -10,6 +10,14 @@ class JwtService {
         const token = jwt.sign({userId: user.id}, key, {expiresIn: "1d"})
         return token
     }
+    async getUserIdByToken(token: string) {
+        try {
+            const result = jwt.verify(token, key) as JwtPayload & {userId: string}
+            return result.userId
+        } catch (err) {
+            throw new Error("Unable to verify token")
+        }
+    }
 }
 
 export default new JwtService()
