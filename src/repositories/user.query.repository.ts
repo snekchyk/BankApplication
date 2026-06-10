@@ -31,6 +31,7 @@ class UserQueryRepository {
                 firstName: true,
                 lastName: true,
                 email: true,
+                username: true,
                 age: true
             }
         })
@@ -43,6 +44,7 @@ class UserQueryRepository {
                 firstName: true,
                 lastName: true,
                 email: true,
+                username: true,
                 age: true
             }
         })
@@ -60,6 +62,20 @@ class UserQueryRepository {
         return prisma.users.findUnique({
             where: {
                 id: id
+            }
+        })
+    }
+
+    async update(id: string, data: {firstName: string, lastName: string, email: string, username: string}): Promise<UserViewModel> {
+        return prisma.users.update({
+            where: { id: id },
+            data: data,
+            select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+                username: true,
+                age: true
             }
         })
     }

@@ -4,5 +4,6 @@ import {authMiddleware} from "../middlewares/auth.middleware.js";
 const userRouter = Router()
 
 userRouter.get('/info', authMiddleware,  UserController.information)
+userRouter.patch('/update', authMiddleware, UserController.update)
 
 export { userRouter }

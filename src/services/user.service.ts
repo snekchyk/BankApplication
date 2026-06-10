@@ -19,6 +19,9 @@ class UserService {
         }
         return user
     }
+    async update(id: string, data: {firstName: string, lastName: string, email: string, username: string}): Promise<UserViewModel> {
+        return UserQueryRepository.update(id, data)
+    }
 }
 
 export default new UserService()
