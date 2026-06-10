@@ -10,7 +10,7 @@ class UserController {
             return
         }
 
-        return info
+        return res.status(200).send(info)
     }
 }
 

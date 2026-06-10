@@ -7,7 +7,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     if (!req.headers.authorization) {
         return res.sendStatus(401)
     }
-
     const token = req.headers.authorization.split(' ')[1]
     let userId: string | null = null
 
@@ -16,7 +15,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
         if(userId) {
             req.user = await UserService.getUserById(userId)
-
             return next()
         }
     } catch (err: any) {
