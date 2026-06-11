@@ -22,6 +22,18 @@ class UserController {
         const updatedUser = await UserService.update(id, {firstName, lastName, email, username})
         return res.status(200).send(updatedUser)
     }
+
+    async delete(req: RequestWithUser, res: Response<UserViewModel>) {
+        const id = req.user.id
+
+        try {
+            await UserService.delete(id)
+        } catch (err){
+            return res.sendStatus(400)
+        }
+
+        return res.sendStatus(204)
+    }
 }
 
 export default new UserController()

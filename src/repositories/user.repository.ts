@@ -7,6 +7,11 @@ class UserRepository {
             data: data
         })
     }
+    async deleteById(id: string) {
+        return prisma.users.delete({
+            where: {id: id}
+        })
+    }
 }
 
 export default new UserRepository()

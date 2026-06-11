@@ -58,7 +58,7 @@ class UserQueryRepository {
         })
     }
 
-    async findUserById(id: string): Promise<UserViewModel | null> {
+    async findUserById(id: string): Promise<Users | null> {
         return prisma.users.findUnique({
             where: {
                 id: id

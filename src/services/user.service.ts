@@ -1,9 +1,10 @@
 import {UserViewModel} from "../models/view/UserViewModel.js";
 import UserRepository from "../repositories/user.repository.js";
 import UserQueryRepository from "../repositories/user.query.repository.js";
+import {Users} from "@prisma/client";
 
 class UserService {
-    async getUserById(userId: string): Promise<UserViewModel> {
+    async getUserById(userId: string): Promise<Users> {
         const user = await UserQueryRepository.findUserById(userId)
 
         if (!user) {
@@ -21,6 +22,9 @@ class UserService {
     }
     async update(id: string, data: {firstName: string, lastName: string, email: string, username: string}): Promise<UserViewModel> {
         return UserQueryRepository.update(id, data)
+    }
+    async delete(id: string) {
+        return UserRepository.deleteById(id)
     }
 }
 
