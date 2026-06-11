@@ -12,6 +12,16 @@ class UserRepository {
             where: {id: id}
         })
     }
+    async update_password(email: string, password: string) {
+        const updated_user = await prisma.users.update({
+            where: {email: email},
+            data: {
+                password: password
+            }
+        })
+
+        return updated_user.password
+    }
 }
 
 export default new UserRepository()

@@ -2,6 +2,7 @@ import {UserViewModel} from "../models/view/UserViewModel.js";
 import UserRepository from "../repositories/user.repository.js";
 import UserQueryRepository from "../repositories/user.query.repository.js";
 import {Users} from "@prisma/client";
+import bcrypt from "bcrypt";
 
 class UserService {
     async getUserById(userId: string): Promise<Users> {
@@ -25,6 +26,14 @@ class UserService {
     }
     async delete(id: string) {
         return UserRepository.deleteById(id)
+    }
+    async update_password(email: string, password: string, old_password: string, new_password: string) {
+        const isPasswordCorrect = await bcrypt.compare(old_password, password)
+        if (!isPasswordCorrect) {
+            throw new Error("Invalid password")
+        }
+
+        return UserRepository.update_password(email, new_password)
     }
 }
 

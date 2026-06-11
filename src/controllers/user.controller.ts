@@ -34,6 +34,19 @@ class UserController {
 
         return res.sendStatus(204)
     }
+
+    async update_password(req: RequestWithUser, res: Response<{message: string}>) {
+        const {email, password} = req.user
+        const {old_password, new_password} = req.body
+
+        try {
+            const updatedPassword = await UserService.update_password(email, password, old_password, new_password)
+        } catch (err) {
+            return res.sendStatus(400)
+        }
+
+        return res.status(204).send({message: "Your password was updated"})
+    }
 }
 
 export default new UserController()
