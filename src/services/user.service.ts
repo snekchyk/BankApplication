@@ -33,7 +33,10 @@ class UserService {
             throw new Error("Invalid password")
         }
 
-        return UserRepository.update_password(email, new_password)
+        const passwordSalt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(new_password, passwordSalt)
+
+        return UserRepository.update_password(email, hashedPassword)
     }
 }
 
